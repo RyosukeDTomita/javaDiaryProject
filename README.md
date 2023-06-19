@@ -1,4 +1,4 @@
-# JavaDialyProject
+# javaDialyProject
 
 ## how to use
 http://localhost:8080/javaDialyProject-0.0.1-SNAPSHOT/main
