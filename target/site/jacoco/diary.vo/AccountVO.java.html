@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountVO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JDialy</a> &gt; <a href="index.source.html" class="el_package">diary.vo</a> &gt; <span class="el_source">AccountVO.java</span></div><h1>AccountVO.java</h1><pre class="source lang-java linenums">package diary.vo;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import static java.util.Comparator.comparing;
+
+/**
+ * Account is implementation of Serializable, stored user login information.
+ * 
+ * @author iceman
+ * @version 1.0
+ *
+ */
+public class AccountVO implements Serializable, Comparable&lt;AccountVO&gt; {
+    private String loginID;
+    private String password;
+    private static final long serialVersionUID = 1L;
+
+<span class="nc" id="L19">    public AccountVO() {</span>
+<span class="nc" id="L20">    }</span>
+
+    /**
+     * Constructor
+     * 
+     * @param loginID  User ID
+     * @param password User password
+     */
+<span class="fc" id="L28">    public AccountVO(String loginID, String password) {</span>
+<span class="fc" id="L29">        this.loginID = loginID;</span>
+<span class="fc" id="L30">        this.password = password;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * @return loginID Login ID
+     */
+    public String getLoginID() {
+<span class="nc" id="L37">        return loginID;</span>
+    }
+
+    /**
+     * @param loginID login ID
+     */
+    public void setLoginID(String loginID) {
+<span class="nc" id="L44">        this.loginID = loginID;</span>
+<span class="nc" id="L45">    }</span>
+
+    /**
+     * @return password login password
+     */
+    public String getPassword() {
+<span class="nc" id="L51">        return password;</span>
+    }
+
+    /**
+     * @param password login password
+     */
+    public void setPassword(String password) {
+<span class="nc" id="L58">        this.password = password;</span>
+<span class="nc" id="L59">    }</span>
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return &quot;AccountVO(loginID/password)&quot;;
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L68">        final String FORMAT = &quot;AccountVO(loginID=%s/password=%s)&quot;;</span>
+<span class="fc" id="L69">        return String.format(FORMAT, loginID, password);</span>
+    }
+
+    /**
+     * Comparator Construction Method
+     */
+<span class="fc" id="L75">    private static final Comparator&lt;AccountVO&gt; COMPARATOR = comparing((AccountVO avo) -&gt; avo.loginID)</span>
+<span class="fc" id="L76">            .thenComparing(avo -&gt; avo.password);</span>
+
+    /**
+     * {@inheritDoc}
+     * 
+     * WEP
+     * 
+     * @param avo {@code AccountVO}
+     * @return result to use signum, return -1, 0, 1
+     */
+    @Override
+    public int compareTo(AccountVO avo) {
+<span class="fc" id="L88">        return Integer.signum(COMPARATOR.compare(this, avo));</span>
+        // int result = loginID.compareTo(avo.loginID);
+        // if (result == 0) {
+        // result = password.compareTo(avo.password);
+        // }
+        // return Integer.signum(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (o == this) {</span>
+<span class="nc" id="L102">            return true;</span>
+        }
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (!(o instanceof AccountVO)) {</span>
+<span class="nc" id="L105">            return false;</span>
+        }
+<span class="fc" id="L107">        AccountVO avo = (AccountVO) o;</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">        return avo.loginID == loginID &amp;&amp; avo.password == password;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L116">        int result = loginID.hashCode();</span>
+<span class="fc" id="L117">        result = 31 * result + password.hashCode();</span>
+<span class="fc" id="L118">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     * WIP
+     */
+
+    @Override
+    protected final Object clone() throws CloneNotSupportedException {
+<span class="fc" id="L128">        throw new CloneNotSupportedException();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

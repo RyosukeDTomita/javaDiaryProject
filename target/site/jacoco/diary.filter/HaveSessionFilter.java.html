@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HaveSessionFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JDialy</a> &gt; <a href="index.source.html" class="el_package">diary.filter</a> &gt; <span class="el_source">HaveSessionFilter.java</span></div><h1>HaveSessionFilter.java</h1><pre class="source lang-java linenums">package diary.filter;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Enumeration;
+import java.util.List;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Filter whether having session or not.
+ * For Debug.
+ * 
+ * @author iceman
+ * @version 1.0
+ */
+public class HaveSessionFilter implements Filter {
+
+<span class="nc" id="L25">    public HaveSessionFilter() {</span>
+<span class="nc" id="L26">    }</span>
+
+    /**
+     * This method is called when initialize instance.
+     * 
+     * @param fConfig
+     * @throws ServletException
+     */
+
+    public void init(FilterConfig fConfig) throws ServletException {
+<span class="nc" id="L36">    }</span>
+
+    /**
+     * This method is called when destroy instance.
+     */
+    public void destroy() {
+<span class="nc" id="L42">    }</span>
+
+    /**
+     * This method is called when Filter Class is called.
+     * 
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+<span class="nc" id="L56">        chain.doFilter(request, response);</span>
+
+<span class="nc" id="L58">        HttpSession session = ((HttpServletRequest) request).getSession(false); // no session, return null.</span>
+
+<span class="nc" id="L60">        System.out.println(&quot;1&quot;);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (session == null) {</span>
+<span class="nc" id="L62">            System.out.println(&quot;[DEBUG] HaveSessionFilter:: NO SESSION.&quot;);</span>
+        } else {
+<span class="nc" id="L64">            System.out.println(&quot;[DEBUG] HaveSessionFilter:: SESSION EXISTS.&quot;);</span>
+<span class="nc" id="L65">            System.out.println(&quot;[DEBUG] HaveSessionFilter:: SESSION INFO&quot;);</span>
+<span class="nc" id="L66">            Enumeration&lt;String&gt; enums = session.getAttributeNames();</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            while (enums.hasMoreElements()) {</span>
+<span class="nc" id="L69">                String key = enums.nextElement();</span>
+<span class="nc" id="L70">                Object obj = session.getAttribute(key);</span>
+<span class="nc" id="L71">                System.out.println(&quot;[DEBUG] HaveSessionFilter:: &quot; + key + &quot;: &quot; + obj);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                if (obj instanceof List) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                    for (Object o : (List&lt;?&gt;) obj) {</span>
+<span class="nc" id="L74">                        System.out.println(&quot;[DEBUG] HaveSessionFilter:: ListValue =&gt; &quot; + o);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                        for (Field field : o.getClass().getDeclaredFields()) {</span>
+<span class="nc" id="L76">                            field.setAccessible(true);</span>
+
+                            try {
+<span class="nc" id="L79">                                Object oValue = field.get(o);</span>
+<span class="nc" id="L80">                                System.out.println(</span>
+<span class="nc" id="L81">                                        &quot;[DEBUG] HaveSessionFilter::     Value =&gt; &quot; + field.getName() + &quot; :: &quot;</span>
+                                                + oValue);
+<span class="nc" id="L83">                            } catch (Exception e) {</span>
+<span class="nc" id="L84">                                e.printStackTrace();</span>
+<span class="nc" id="L85">                            }</span>
+                        }
+<span class="nc" id="L87">                    }</span>
+                }
+<span class="nc" id="L89">            }</span>
+<span class="nc" id="L90">            System.out.println(&quot;[DEBUG] HaveSessionFilter:: --------------------------------&quot;);</span>
+
+        }
+<span class="nc" id="L93">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

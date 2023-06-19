@@ -1,0 +1,13 @@
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/annotation/Fast.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/util/CalendarUtilTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/bean/LoginSubmitBeanTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/bean/NewDiaryBeanTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/dataaccess/LoginDAOTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/bean/DeleteDiaryBeanTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/vo/AccountVOTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/util/ConnectionManagerUtilTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/annotation/Slow.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/dataaccess/DiaryDAOTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/bean/UserDiaryListBeanTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/bean/AddAccountBeanTest.java
+/home/tomita/eclipse-workspace/javaDiaryProject/src/test/java/diary/vo/DiaryVOTest.java

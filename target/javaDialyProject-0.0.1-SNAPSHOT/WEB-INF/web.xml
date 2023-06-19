@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+  <display-name>diary</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- セッションタイムアウトの時間を指定する(分) -->
+  <session-config>
+    <session-timeout>5</session-timeout>
+  </session-config>
+
+  <servlet>
+    <servlet-name>MainServlet</servlet-name>
+    <servlet-class>diary.servlet.MainServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MainServlet</servlet-name>
+    <url-pattern>/main</url-pattern>
+  </servlet-mapping>
+
+  <!-- エンコーディング用のフィルター -->
+  <filter>
+    <display-name>EncodingFilter</display-name>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>diary.filter.EncodingFilter</filter-class>
+  </filter>
+
+  <!-- エンコーディング用のフィルターマッピング -->
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- セッションデバッグ用のフィルター -->
+  <filter>
+    <display-name>HaveSessionFilter</display-name>
+    <filter-name>HaveSessionFilter</filter-name>
+    <filter-class>diary.filter.HaveSessionFilter</filter-class>
+  </filter>
+
+  <!-- セッションデバッグ用のフィルターマッピング -->
+  <filter-mapping>
+    <filter-name>HaveSessionFilter</filter-name>
+    <url-pattern>/main</url-pattern>
+  </filter-mapping>
+
+</web-app>

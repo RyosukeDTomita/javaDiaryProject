@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionManagerUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JDialy</a> &gt; <a href="index.source.html" class="el_package">diary.util</a> &gt; <span class="el_source">ConnectionManagerUtil.java</span></div><h1>ConnectionManagerUtil.java</h1><pre class="source lang-java linenums">package diary.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+/**
+ * ConnectionManagerUtil.
+ * Used by DAO.
+ * 
+ * @author iceman
+ * @version 1.0
+ */
+<span class="fc" id="L15">public class ConnectionManagerUtil {</span>
+    private static String driverName;
+    private static String host;
+    private static String user;
+    private static String password;
+    private static String dbName;
+    private static String port;
+    private static Connection connection;
+
+    /*
+     * Initial setting for Data Base.
+     * fetch db info and load db driver.
+     * static {} run when constructor is called.
+     */
+    static {
+        // from &quot;system.properties&quot;, fetch DB information.
+<span class="fc" id="L31">        ResourceBundle rb = ResourceBundle.getBundle(&quot;system&quot;);</span>
+<span class="fc" id="L32">        driverName = rb.getString(&quot;db.driver&quot;);</span>
+<span class="fc" id="L33">        user = rb.getString(&quot;db.user&quot;);</span>
+<span class="fc" id="L34">        dbName = rb.getString(&quot;db.dbName&quot;);</span>
+<span class="fc" id="L35">        password = rb.getString(&quot;db.pass&quot;);</span>
+<span class="fc" id="L36">        host = rb.getString(&quot;db.host&quot;);</span>
+<span class="fc" id="L37">        port = rb.getString(&quot;db.port&quot;);</span>
+
+        // fix &quot;No suitable driver found for jdbc error&quot;.
+        try {
+<span class="fc" id="L41">            Class.forName(driverName);</span>
+<span class="nc" id="L42">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L43">            e.printStackTrace();</span>
+<span class="nc" id="L44">            System.out.println(&quot;can not load data base driver.&quot;);</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Create connection to Data Base.
+     *
+     * @return Connection
+     *         sql connection.
+     */
+    public Connection getConnection() {
+<span class="fc" id="L55">        String dbPath = String.format(&quot;jdbc:mysql://%s:%s/%s&quot;, host, port, dbName);</span>
+        try {
+<span class="fc" id="L57">            connection = DriverManager.getConnection(dbPath, user, password);</span>
+<span class="nc" id="L58">        } catch (SQLException e) {</span>
+<span class="nc" id="L59">            throw new RuntimeException(&quot;data base connection error.&quot;, e);</span>
+<span class="fc" id="L60">        }</span>
+
+        try {
+<span class="fc" id="L63">            connection.setAutoCommit(false);</span>
+<span class="nc" id="L64">        } catch (SQLException e) {</span>
+<span class="nc" id="L65">            throw new RuntimeException(&quot;Failed to set auto commit=off.&quot;, e);</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">        return connection;</span>
+
+    }
+
+    /**
+     * commit change db.
+     */
+    public void commit() {
+        try {
+<span class="fc" id="L76">            connection.commit();</span>
+<span class="nc" id="L77">        } catch (SQLException e) {</span>
+<span class="nc" id="L78">            throw new RuntimeException(&quot;Failed to commit.&quot;);</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * roll back db.
+     */
+    public void rollback() {
+        try {
+<span class="nc" id="L87">            connection.rollback();</span>
+<span class="nc" id="L88">        } catch (SQLException e) {</span>
+<span class="nc" id="L89">            throw new RuntimeException(&quot;Failed to rollback.&quot;);</span>
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">    }</span>
+
+    /**
+     * close Connection.
+     */
+    public void closeConnection() {
+        try {
+<span class="fc" id="L98">            connection.close();</span>
+<span class="nc" id="L99">        } catch (SQLException e) {</span>
+<span class="nc" id="L100">            throw new RuntimeException(&quot;Failed to close connection.&quot;, e);</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

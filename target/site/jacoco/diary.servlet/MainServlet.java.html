@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JDialy</a> &gt; <a href="index.source.html" class="el_package">diary.servlet</a> &gt; <span class="el_source">MainServlet.java</span></div><h1>MainServlet.java</h1><pre class="source lang-java linenums">package diary.servlet;
+
+import diary.bean.ExecuteInterface;
+import java.io.IOException;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Called by jsp.
+ * forwarding jsp.
+ * 
+ * @author iceman
+ * @version 1.0
+ */
+<span class="nc" id="L22">public class MainServlet extends HttpServlet {</span>
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+<span class="nc" id="L34">        ResourceBundle rb = ResourceBundle.getBundle(&quot;action&quot;);</span>
+<span class="nc" id="L35">        String forwardPage = rb.getString(&quot;TopPage&quot;);</span>
+
+<span class="nc" id="L37">        HttpSession session = request.getSession(false); // session not exist, return null.</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (session != null) {</span>
+<span class="nc" id="L39">            session.invalidate(); // destroy session.</span>
+        }
+
+        // forward to login.jsp
+<span class="nc" id="L43">        RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPage);</span>
+<span class="nc" id="L44">        dispatcher.forward(request, response);</span>
+<span class="nc" id="L45">        return;</span>
+    }
+
+    /**
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+<span class="nc" id="L57">        ResourceBundle rb = ResourceBundle.getBundle(&quot;action&quot;);</span>
+<span class="nc" id="L58">        HttpSession session = request.getSession(false); // Session not exist, then return null.</span>
+<span class="nc" id="L59">        String action = request.getParameter(&quot;action&quot;); // get html hidden parameter.</span>
+
+        try {
+<span class="nc" id="L62">            StringTokenizer tkn = new StringTokenizer(action, &quot;.&quot;); // separating action by &quot;.&quot;</span>
+<span class="nc" id="L63">            String pageName = tkn.nextToken();</span>
+
+<span class="nc" id="L65">            String noAuthPage = &quot;false&quot;;</span>
+            try {
+<span class="nc" id="L67">                noAuthPage = rb.getString(pageName + &quot;.noAuthPage&quot;);</span>
+<span class="nc" id="L68">            } catch (MissingResourceException e) {</span>
+<span class="nc" id="L69">                e.printStackTrace();</span>
+<span class="nc" id="L70">                System.out.println(&quot;noAuthPage is not found in action.property.&quot;);</span>
+<span class="nc" id="L71">            }</span>
+
+            // Authentication page.
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (&quot;false&quot;.equals(noAuthPage)) {</span>
+                // no session, then forward to login.jsp.
+<span class="nc bnc" id="L76" title="All 4 branches missed.">                if (session == null || session.getAttribute(&quot;loginID&quot;) == null</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                        || &quot;&quot;.equals(session.getAttribute(&quot;loginID&quot;))) {</span>
+<span class="nc" id="L78">                    RequestDispatcher dispatcher = request.getRequestDispatcher(rb.getString(&quot;TopPage&quot;));</span>
+<span class="nc" id="L79">                    dispatcher.forward(request, response);</span>
+<span class="nc" id="L80">                    return;</span>
+                }
+            }
+
+<span class="nc" id="L84">            String className = rb.getString(action); // action.properties .submit value.</span>
+<span class="nc" id="L85">            Class&lt;?&gt; clazz = Class.forName(className); // return &quot;className&quot; Class Object.</span>
+            // newInstance() is deprecaetd.
+<span class="nc" id="L87">            ExecuteInterface usi = (ExecuteInterface) clazz.newInstance();</span>
+
+<span class="nc" id="L89">            String ret = usi.execute(request, response); // return &quot;success&quot; or &quot;failure&quot;.</span>
+
+            try {
+<span class="nc" id="L92">                String forwardPage = rb.getString(action + &quot;.&quot; + ret);</span>
+<span class="nc" id="L93">                RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPage);</span>
+<span class="nc" id="L94">                dispatcher.forward(request, response);</span>
+<span class="nc" id="L95">                return;</span>
+<span class="nc" id="L96">            } catch (MissingResourceException e) {</span>
+<span class="nc" id="L97">                e.printStackTrace();</span>
+<span class="nc" id="L98">                System.out.println(&quot;No forwarding in jsp action.property&quot;);</span>
+            }
+
+<span class="nc" id="L101">        } catch (Exception e) {</span>
+<span class="nc" id="L102">            e.printStackTrace();</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (session != null) {</span>
+<span class="nc" id="L105">                session.invalidate();</span>
+            }
+            // forward to error.jsp.
+<span class="nc" id="L108">            RequestDispatcher dispatcher = request.getRequestDispatcher(rb.getString(&quot;system.error.top&quot;));</span>
+<span class="nc" id="L109">            dispatcher.forward(request, response);</span>
+<span class="nc" id="L110">            return;</span>
+<span class="nc" id="L111">        }</span>
+
+<span class="nc" id="L113">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

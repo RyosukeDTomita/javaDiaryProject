@@ -1,0 +1,17 @@
+@charset "UTF-8";
+h1 {
+    color: #dcdcdc;
+    font-size: 20px;
+    font-family: serif;
+    background-color: #073642;
+}
+
+table,
+td {
+    border: 1px solid #000000;
+}
+thead,
+tfoot {
+    background-color: #073642;
+    color: #dcdcdc;
+}

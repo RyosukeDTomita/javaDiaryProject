@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiaryDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JDialy</a> &gt; <a href="index.source.html" class="el_package">diary.dataaccess</a> &gt; <span class="el_source">DiaryDAO.java</span></div><h1>DiaryDAO.java</h1><pre class="source lang-java linenums">package diary.dataaccess;
+
+import diary.util.ConnectionManagerUtil;
+import diary.vo.DiaryVO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ * DataBase access class related with Diary contents.
+ * Used by {@link diary.bean.UserDiaryListBean DiaryListBean},
+ * {@link diary.bean.NewDiaryBean CreateDiaryBean}.
+ * 
+ * @author iceman
+ * @version 1.0
+ */
+public class DiaryDAO {
+
+<span class="fc" id="L25">    ConnectionManagerUtil connectionManager = new ConnectionManagerUtil();</span>
+    private Connection connection;
+
+<span class="fc" id="L28">    public DiaryDAO(Connection connection) {</span>
+<span class="fc" id="L29">        this.connection = connection;</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Insert DiaryVO into SQL Data Base.
+     *
+     * @param dvo {@code DiaryVO}
+     * @return int
+     * 
+     */
+    public int insert(DiaryVO dvo) {
+<span class="fc" id="L40">        String INSERT_SQL = &quot;INSERT INTO diarycontent (dt, id, sentence, checks) VALUES(?, ?, ?, ?)&quot;;</span>
+<span class="fc" id="L41">        try (PreparedStatement statement = connection.prepareStatement(INSERT_SQL)) {</span>
+<span class="fc" id="L42">            System.out.println(&quot;INSERT &quot; + dvo);</span>
+<span class="fc" id="L43">            statement.setString(1, dvo.getDateTime());</span>
+<span class="fc" id="L44">            statement.setString(2, dvo.getLoginID());</span>
+<span class="fc" id="L45">            statement.setString(3, dvo.getSentence());</span>
+<span class="fc" id="L46">            statement.setString(4, &quot;NULL&quot;); // WEP</span>
+<span class="fc" id="L47">            int count = statement.executeUpdate();</span>
+<span class="fc" id="L48">            return count;</span>
+<span class="nc" id="L49">        } catch (SQLException e) {</span>
+<span class="nc" id="L50">            e.printStackTrace();</span>
+<span class="nc" id="L51">            return -99; // error</span>
+        }
+
+    }
+
+    /**
+     * Select {@code userID}'s all diary data and store {@code diaryList}.
+     * This list is consist of {@link DiaryVO DiaryVO}.
+     * 
+     * @return List
+     */
+    public List&lt;DiaryVO&gt; selectUserDiary(String userID) {
+<span class="fc" id="L63">        String SELECT_SQL = &quot;SELECT dt, id, sentence, checks FROM diarycontent WHERE id=?&quot;;</span>
+
+<span class="fc" id="L65">        List&lt;DiaryVO&gt; diaryList = new ArrayList&lt;&gt;(); // = ArrayList&lt;DiaryVO&gt;() (Diamond Operator).</span>
+<span class="fc" id="L66">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
+<span class="fc" id="L67">            statement.setString(1, userID);</span>
+<span class="fc" id="L68">            try (ResultSet resultSet = statement.executeQuery()) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                while (resultSet.next()) {</span>
+<span class="fc" id="L70">                    DiaryVO diaryVO = new DiaryVO();</span>
+<span class="fc" id="L71">                    diaryVO.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
+<span class="fc" id="L72">                    diaryVO.setLoginID(resultSet.getString(&quot;id&quot;));</span>
+<span class="fc" id="L73">                    diaryVO.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
+<span class="fc" id="L74">                    diaryList.add(diaryVO);</span>
+<span class="fc" id="L75">                }</span>
+                // System.out.println(diaryList);
+            }
+<span class="nc" id="L78">        } catch (SQLException e) {</span>
+<span class="nc" id="L79">            e.printStackTrace();</span>
+<span class="nc" id="L80">            System.out.println(&quot;SQLException.&quot;);</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        Collections.reverse(diaryList);</span>
+<span class="fc" id="L83">        return diaryList;</span>
+    }
+
+    /**
+     * Used in {@code drop()}.
+     * From DB, get diarycontent NUMBER.
+     * 
+     * @param dvo
+     * @return int
+     */
+    private int getDeletingDiaryNumber(DiaryVO dvo) {
+<span class="fc" id="L94">        String SELECT_SQL = &quot;SELECT * FROM diarycontent WHERE id=? AND dt=?&quot;;</span>
+
+<span class="fc" id="L96">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
+<span class="fc" id="L97">            statement.setString(1, dvo.getLoginID());</span>
+<span class="fc" id="L98">            statement.setString(2, dvo.getDateTime());</span>
+<span class="fc" id="L99">            try (ResultSet resultSet = statement.executeQuery()) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">                while (resultSet.next()) {</span>
+<span class="fc" id="L101">                    DiaryVO delCandidateDvo = new DiaryVO();</span>
+<span class="fc" id="L102">                    delCandidateDvo.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
+<span class="fc" id="L103">                    delCandidateDvo.setLoginID(resultSet.getString(&quot;id&quot;));</span>
+<span class="fc" id="L104">                    delCandidateDvo.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                    if (delCandidateDvo.equals(dvo)) {</span>
+<span class="fc" id="L106">                        return resultSet.getInt(&quot;NUMBER&quot;);</span>
+                    }
+<span class="fc" id="L108">                }</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            }</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L111">            e.printStackTrace();</span>
+<span class="nc" id="L112">            System.out.println(&quot;SQLException.&quot;);</span>
+<span class="fc" id="L113">        }</span>
+<span class="fc" id="L114">        return -99; // No deleting target.</span>
+    }
+
+    /**
+     * Delete diary data.
+     * 
+     * @param dvo
+     * @return
+     */
+    public int drop(DiaryVO dvo) {
+<span class="fc" id="L124">        String DELETE_SQL = &quot;DELETE FROM diarycontent WHERE NUMBER=?&quot;;</span>
+<span class="fc" id="L125">        Integer dropDiaryNumber = getDeletingDiaryNumber(dvo);</span>
+<span class="fc" id="L126">        try (PreparedStatement statement = connection.prepareStatement(DELETE_SQL)) {</span>
+<span class="fc" id="L127">            System.out.println(&quot;DELETE &quot; + dvo);</span>
+<span class="fc" id="L128">            statement.setString(1, dropDiaryNumber.toString());</span>
+<span class="fc" id="L129">            int count = statement.executeUpdate();</span>
+<span class="fc" id="L130">            return count;</span>
+<span class="nc" id="L131">        } catch (SQLException e) {</span>
+<span class="nc" id="L132">            e.printStackTrace();</span>
+<span class="nc" id="L133">            return -99; // error</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
