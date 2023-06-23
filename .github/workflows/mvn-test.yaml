@@ -3,7 +3,7 @@ on: [push]
 jobs:
   junit-test: # job id(Typed by user)
     name: junit5 mvn test
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
 
