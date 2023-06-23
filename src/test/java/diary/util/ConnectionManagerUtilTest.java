@@ -17,31 +17,31 @@ import diary.annotation.Fast;
  * @author iceman
  * @version 1.0
  */
-// public class ConnectionManagerUtilTest {
+public class ConnectionManagerUtilTest {
 
-// public class InstantiateTest {
-// /**
-// * default constructor instantiate test.
-// */
-// @Fast
-// @Test
-// public void defaultConstructorTest() {
-// ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();
-// }
-// }
+    public class InstantiateTest {
+        /**
+         * default constructor instantiate test.
+         */
+        @Fast
+        @Test
+        public void defaultConstructorTest() {
+            ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();
+        }
+    }
 
-// static ConnectionManagerUtil managerUtil;
+    static ConnectionManagerUtil managerUtil;
 
-// @BeforeAll
-// public static void setUpClass() {
-// managerUtil = new ConnectionManagerUtil();
-// }
+    @BeforeAll
+    public static void setUpClass() {
+        managerUtil = new ConnectionManagerUtil();
+    }
 
-// @Fast
-// @Test
-// public void getConnectionTest() {
-// Connection connection = managerUtil.getConnection();
-// assertNotNull(connection);
-// }
+    @Fast
+    @Test
+    public void getConnectionTest() {
+        Connection connection = managerUtil.getConnection();
+        assertNotNull(connection);
+    }
 
-// }
+}

@@ -18,33 +18,33 @@ import diary.util.ConnectionManagerUtil;
  * @author iceman
  * @version 1.0
  */
-// public class LoginDAOTest {
-// static LoginDAO loginDAO;
+public class LoginDAOTest {
+    static LoginDAO loginDAO;
 
-// @BeforeAll
-// public static void setUpClass() {
-// ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();
-// Connection connection = managerUtil.getConnection();
-// loginDAO = new LoginDAO(connection);
-// }
+    @BeforeAll
+    public static void setUpClass() {
+        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();
+        Connection connection = managerUtil.getConnection();
+        loginDAO = new LoginDAO(connection);
+    }
 
-// @Test
-// @Fast
-// public void checkLoginTest() {
-// try {
-// // Collect User login.
-// boolean loginTrue = loginDAO.checkLogin("hoge", "password");
-// assertTrue(loginTrue);
+    @Test
+    @Fast
+    public void checkLoginTest() {
+        try {
+            // Collect User login.
+            boolean loginTrue = loginDAO.checkLogin("hoge", "password");
+            assertTrue(loginTrue);
 
-// // incorrect password.
-// boolean loginFalse1 = loginDAO.checkLogin("hoge", "p@ssword");
-// assertFalse(loginFalse1);
+            // incorrect password.
+            boolean loginFalse1 = loginDAO.checkLogin("hoge", "p@ssword");
+            assertFalse(loginFalse1);
 
-// // incorrect user id.
-// boolean loginFalse2 = loginDAO.checkLogin("anon", "password");
-// assertFalse(loginFalse2);
-// } catch (SQLException e) {
-// e.printStackTrace();
-// }
-// }
-// }
+            // incorrect user id.
+            boolean loginFalse2 = loginDAO.checkLogin("anon", "password");
+            assertFalse(loginFalse2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
