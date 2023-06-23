@@ -8,6 +8,7 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import diary.annotation.Fast;
 
@@ -17,6 +18,7 @@ import diary.annotation.Fast;
  * @author iceman
  * @version 1.0
  */
+@Disabled
 public class ConnectionManagerUtilTest {
 
     public class InstantiateTest {

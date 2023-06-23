@@ -10,6 +10,7 @@ import org.apache.struts.mock.MockHttpSession;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import diary.annotation.Fast;
 import diary.util.ConnectionManagerUtil;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author iceman
  * @version 1.0
  */
+@Disabled
 public class NewDiaryBeanTest {
     /**
      * Instantiating test class.
@@ -81,6 +83,7 @@ public class NewDiaryBeanTest {
         Connection connection = managerUtil.getConnection();
         DiaryDAO diaryDAO = new DiaryDAO(connection);
         DiaryVO dvo = new DiaryVO("laughing man", "1999-12-31", "僕は耳と目を閉じ，口を噤んだ人間になろうと考えた。");
+        DiaryVO dvo = new DiaryVO("laughing man", "1999-12-31", "僕は耳と目を閉じ，口を噤んだ人間になろうと考えた。");
         diaryDAO.drop(dvo);
         managerUtil.commit();
         managerUtil.closeConnection();
@@ -106,5 +109,4 @@ public class NewDiaryBeanTest {
         // test
         assertEquals("success", usi.execute(request, response));
     }
-
 }

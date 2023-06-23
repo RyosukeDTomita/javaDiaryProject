@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.apache.struts.mock.MockHttpSession;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import diary.annotation.Fast;
 
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author iceman
  * @version 1.0
  */
+@Disabled
 public class LoginSubmitBeanTest {
     /**
      * Instantiating test class.

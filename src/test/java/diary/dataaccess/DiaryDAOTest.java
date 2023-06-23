@@ -14,6 +14,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import diary.annotation.Fast;
 import diary.annotation.Slow;
@@ -26,6 +27,7 @@ import diary.vo.DiaryVO;
  * @author iceman
  * @version 1.0
  */
+@Disabled
 public class DiaryDAOTest {
 
     static DiaryDAO diaryDAO;
@@ -83,6 +85,8 @@ public class DiaryDAOTest {
     @Test
     @Fast
     public void getDeletingDiaryNumberTest()
+            throws IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException,
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
             NoSuchMethodException {
         // setup

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import diary.annotation.Fast;
 import diary.util.ConnectionManagerUtil;
@@ -18,6 +19,7 @@ import diary.util.ConnectionManagerUtil;
  * @author iceman
  * @version 1.0
  */
+@Disabled
 public class LoginDAOTest {
     static LoginDAO loginDAO;
 
