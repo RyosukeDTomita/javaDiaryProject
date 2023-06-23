@@ -1,0 +1,24 @@
+name: mvn-test
+on: [push]
+jobs:
+  junit-test: # job id(Typed by user)
+    name: junit5 mvn test
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Checkout repository to runner
+      - name: Checkout runner
+        uses: actions/checkout@v3
+
+      # Java11 setup
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          architecture: x64
+
+      # run JUnit5 test
+      - name: Run the JUnit5 with Maven
+        run: mvn test
