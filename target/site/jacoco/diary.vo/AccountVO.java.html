@@ -61,31 +61,30 @@ public class AccountVO implements Serializable, Comparable&lt;AccountVO&gt; {
     /**
      * {@inheritDoc}
      * 
-     * @return &quot;AccountVO(loginID/password)&quot;;
+     * @return String
+     *         AccountVO(loginID/password)
      */
     @Override
     public String toString() {
-<span class="fc" id="L68">        final String FORMAT = &quot;AccountVO(loginID=%s/password=%s)&quot;;</span>
-<span class="fc" id="L69">        return String.format(FORMAT, loginID, password);</span>
+<span class="fc" id="L69">        final String FORMAT = &quot;AccountVO(loginID=%s/password=%s)&quot;;</span>
+<span class="fc" id="L70">        return String.format(FORMAT, loginID, password);</span>
     }
 
     /**
      * Comparator Construction Method
      */
-<span class="fc" id="L75">    private static final Comparator&lt;AccountVO&gt; COMPARATOR = comparing((AccountVO avo) -&gt; avo.loginID)</span>
-<span class="fc" id="L76">            .thenComparing(avo -&gt; avo.password);</span>
+<span class="fc" id="L76">    private static final Comparator&lt;AccountVO&gt; COMPARATOR = comparing((AccountVO avo) -&gt; avo.loginID)</span>
+<span class="fc" id="L77">            .thenComparing(avo -&gt; avo.password);</span>
 
     /**
      * {@inheritDoc}
-     * 
-     * WEP
      * 
      * @param avo {@code AccountVO}
      * @return result to use signum, return -1, 0, 1
      */
     @Override
     public int compareTo(AccountVO avo) {
-<span class="fc" id="L88">        return Integer.signum(COMPARATOR.compare(this, avo));</span>
+<span class="fc" id="L87">        return Integer.signum(COMPARATOR.compare(this, avo));</span>
         // int result = loginID.compareTo(avo.loginID);
         // if (result == 0) {
         // result = password.compareTo(avo.password);
@@ -98,14 +97,14 @@ public class AccountVO implements Serializable, Comparable&lt;AccountVO&gt; {
      */
     @Override
     public boolean equals(Object o) {
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (o == this) {</span>
-<span class="nc" id="L102">            return true;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (o == this) {</span>
+<span class="nc" id="L101">            return true;</span>
         }
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (!(o instanceof AccountVO)) {</span>
-<span class="nc" id="L105">            return false;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (!(o instanceof AccountVO)) {</span>
+<span class="nc" id="L104">            return false;</span>
         }
-<span class="fc" id="L107">        AccountVO avo = (AccountVO) o;</span>
-<span class="fc bfc" id="L108" title="All 4 branches covered.">        return avo.loginID == loginID &amp;&amp; avo.password == password;</span>
+<span class="fc" id="L106">        AccountVO avo = (AccountVO) o;</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        return avo.loginID == loginID &amp;&amp; avo.password == password;</span>
     }
 
     /**
@@ -113,19 +112,18 @@ public class AccountVO implements Serializable, Comparable&lt;AccountVO&gt; {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L116">        int result = loginID.hashCode();</span>
-<span class="fc" id="L117">        result = 31 * result + password.hashCode();</span>
-<span class="fc" id="L118">        return result;</span>
+<span class="fc" id="L115">        int result = loginID.hashCode();</span>
+<span class="fc" id="L116">        result = 31 * result + password.hashCode();</span>
+<span class="fc" id="L117">        return result;</span>
     }
 
     /**
      * {@inheritDoc}
      * WIP
      */
-
     @Override
     protected final Object clone() throws CloneNotSupportedException {
-<span class="fc" id="L128">        throw new CloneNotSupportedException();</span>
+<span class="fc" id="L126">        throw new CloneNotSupportedException();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

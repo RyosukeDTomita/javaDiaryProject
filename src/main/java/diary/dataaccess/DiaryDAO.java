@@ -34,6 +34,7 @@ public class DiaryDAO {
      *
      * @param dvo {@code DiaryVO}
      * @return int
+     *         if return value is plus, success.
      * 
      */
     public int insert(DiaryVO dvo) {
@@ -57,7 +58,9 @@ public class DiaryDAO {
      * Select {@code userID}'s all diary data and store {@code diaryList}.
      * This list is consist of {@link DiaryVO DiaryVO}.
      * 
+     * @param userID {@code String}
      * @return List
+     *         {@code List<DiaryVO>}
      */
     public List<DiaryVO> selectUserDiary(String userID) {
         String SELECT_SQL = "SELECT dt, id, sentence, checks FROM diarycontent WHERE id=?";
@@ -85,10 +88,11 @@ public class DiaryDAO {
 
     /**
      * Used in {@code drop()}.
-     * From DB, get diarycontent NUMBER.
+     * From DB, get diary content NUMBER.
      * 
-     * @param dvo
+     * @param dvo {@code DiaryVO}
      * @return int
+     *         return number identified diary content.
      */
     private int getDeletingDiaryNumber(DiaryVO dvo) {
         String SELECT_SQL = "SELECT * FROM diarycontent WHERE id=? AND dt=?";
@@ -117,8 +121,9 @@ public class DiaryDAO {
     /**
      * Delete diary data.
      * 
-     * @param dvo
-     * @return
+     * @param dvo {@code DiaryVO}
+     * @return int
+     *         if return value is plus, success.
      */
     public int drop(DiaryVO dvo) {
         String DELETE_SQL = "DELETE FROM diarycontent WHERE NUMBER=?";

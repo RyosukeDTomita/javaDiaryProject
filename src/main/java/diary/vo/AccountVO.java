@@ -61,7 +61,8 @@ public class AccountVO implements Serializable, Comparable<AccountVO> {
     /**
      * {@inheritDoc}
      * 
-     * @return "AccountVO(loginID/password)";
+     * @return String
+     *         AccountVO(loginID/password)
      */
     @Override
     public String toString() {
@@ -77,8 +78,6 @@ public class AccountVO implements Serializable, Comparable<AccountVO> {
 
     /**
      * {@inheritDoc}
-     * 
-     * WEP
      * 
      * @param avo {@code AccountVO}
      * @return result to use signum, return -1, 0, 1
@@ -122,7 +121,6 @@ public class AccountVO implements Serializable, Comparable<AccountVO> {
      * {@inheritDoc}
      * WIP
      */
-
     @Override
     protected final Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();

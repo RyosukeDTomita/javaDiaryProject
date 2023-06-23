@@ -28,7 +28,7 @@ public class HaveSessionFilter implements Filter {
     /**
      * This method is called when initialize instance.
      * 
-     * @param fConfig
+     * @param fConfig {@code FilterConfig}
      * @throws ServletException
      */
 
@@ -44,9 +44,9 @@ public class HaveSessionFilter implements Filter {
     /**
      * This method is called when Filter Class is called.
      * 
-     * @param request
-     * @param response
-     * @param chain
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
+     * @param chain    {@code FilterChain}
      * @throws IOException
      * @throws ServletException
      */

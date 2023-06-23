@@ -13,13 +13,12 @@ import java.sql.SQLException;
  * @author iceman
  * @version 1.0
  */
-
 public class LoginDAO {
     ConnectionManagerUtil connetionmanager = new ConnectionManagerUtil();
     private Connection connection;
 
     /**
-     * constructor.
+     * @param connection {@code Connection}
      */
     public LoginDAO(Connection connection) {
         this.connection = connection;
@@ -28,11 +27,10 @@ public class LoginDAO {
     /**
      * run SQL syntax to check user input id, password is exists.
      *
-     * @param id
-     *                 User ID
-     * @param password
-     *                 User password.
+     * @param id       {@code String}
+     * @param password {@code password}
      * @return boolean
+     *         login result.
      * @throws SQLException
      *                      When argument(id, password) is not valid data.
      */

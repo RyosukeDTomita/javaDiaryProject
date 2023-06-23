@@ -21,7 +21,7 @@ import javax.servlet.ServletResponse;
     /**
      * This method is called when initializes instance.
      *
-     * @param fConfig
+     * @param fConfig {@code FilterConfig}
      * @throws ServletException
      */
     @Override
@@ -39,9 +39,9 @@ import javax.servlet.ServletResponse;
     /**
      * This method is called when Filter Class is called.
      * 
-     * @param request
-     * @param response
-     * @param chain
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
+     * @param chain    {@code FilterChain}
      * @throws IOException
      * @throws ServletException
      */

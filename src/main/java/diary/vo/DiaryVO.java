@@ -48,10 +48,10 @@ public class DiaryVO implements Serializable, Comparable<DiaryVO> {
      * 
      * DiaryVO Constructor(loginID, dateTime, sentence, checkListVO).
      * 
-     * @param loginID
-     * @param dateTime
-     * @param sentence
-     * @param checkListVO
+     * @param loginID     {@code String}
+     * @param dateTime    {@code String}
+     * @param sentence    {@code String}
+     * @param checkListVO {@code CheckListVO}
      */
     public DiaryVO(String loginID, String dateTime, String sentence, CheckListVO checkListVO) {
         this.loginID = loginID;
@@ -143,7 +143,8 @@ public class DiaryVO implements Serializable, Comparable<DiaryVO> {
     /**
      * {@inheritDoc}
      * 
-     * @return "DiaryVO(loginID/dateTime/sentence)"
+     * @return String
+     *         DiaryVO(loginID/dateTime/sentence)
      */
     @Override
     public String toString() {
@@ -160,8 +161,9 @@ public class DiaryVO implements Serializable, Comparable<DiaryVO> {
     /**
      * {@inheritDoc}
      * 
-     * @param dvo
+     * @param dvo {@code DiaryVO}
      * @return result
+     *         1, 0, -1
      */
     @Override
     public int compareTo(DiaryVO dvo) {
@@ -203,7 +205,7 @@ public class DiaryVO implements Serializable, Comparable<DiaryVO> {
 
     /**
      * {@inheritDoc}
-     * WIP
+     * Clone not supported
      */
     @Override
     protected final Object clone() throws CloneNotSupportedException {

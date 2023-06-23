@@ -17,39 +17,39 @@ import javax.servlet.http.HttpSession;
  * @author iceman
  * @version 1.0
  */
-<span class="fc" id="L20">public class LoginSubmitBean implements ExecuteInterface {</span>
+<span class="nc" id="L20">public class LoginSubmitBean implements ExecuteInterface {</span>
 
     /**
      * {@inheritDoc}
      * call from {@link diary.servlet.MainServlet MainServlet}
      * 
-     * @param request
-     * @param response
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
      * @return String &quot;success&quot; or &quot;failure&quot;.
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-<span class="fc" id="L33">        String loginID = request.getParameter(&quot;loginID&quot;);</span>
-<span class="fc" id="L34">        String password = request.getParameter(&quot;password&quot;);</span>
+<span class="nc" id="L33">        String loginID = request.getParameter(&quot;loginID&quot;);</span>
+<span class="nc" id="L34">        String password = request.getParameter(&quot;password&quot;);</span>
 
-<span class="fc" id="L36">        boolean auth = false;</span>
+<span class="nc" id="L36">        boolean auth = false;</span>
         try {
             // auth = check(loginID, password, request, response);
             // can not use try with resource with boolean.
-<span class="fc" id="L40">            auth = check(loginID, password); // can not use try with resource with boolean.</span>
+<span class="nc" id="L40">            auth = check(loginID, password); // can not use try with resource with boolean.</span>
 <span class="nc" id="L41">        } catch (SQLException e) {</span>
 <span class="nc" id="L42">            e.printStackTrace();</span>
 <span class="nc" id="L43">            System.out.println(&quot;Authentication error.&quot;);</span>
-<span class="fc" id="L44">        }</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (auth) {</span>
-<span class="fc" id="L46">            HttpSession session = request.getSession(true); // No session, then create new one.</span>
-<span class="fc" id="L47">            session.setAttribute(&quot;loginID&quot;, loginID);</span>
-<span class="fc" id="L48">            return &quot;success&quot;;</span>
+<span class="nc" id="L44">        }</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (auth) {</span>
+<span class="nc" id="L46">            HttpSession session = request.getSession(true); // No session, then create new one.</span>
+<span class="nc" id="L47">            session.setAttribute(&quot;loginID&quot;, loginID);</span>
+<span class="nc" id="L48">            return &quot;success&quot;;</span>
         } else {
-<span class="fc" id="L50">            ResourceBundle rb = ResourceBundle.getBundle(&quot;message&quot;);</span>
-<span class="fc" id="L51">            request.setAttribute(&quot;errorMessage&quot;, rb.getString(&quot;login.error.message&quot;));</span>
-<span class="fc" id="L52">            return &quot;failure&quot;;</span>
+<span class="nc" id="L50">            ResourceBundle rb = ResourceBundle.getBundle(&quot;message&quot;);</span>
+<span class="nc" id="L51">            request.setAttribute(&quot;errorMessage&quot;, rb.getString(&quot;login.error.message&quot;));</span>
+<span class="nc" id="L52">            return &quot;failure&quot;;</span>
         }
 
     }
@@ -57,22 +57,23 @@ import javax.servlet.http.HttpSession;
     /**
      * call {@link diary.dataaccess.LoginDAO LoginDAO}.
      * 
-     * @param id
-     * @param password
-     * @return auth (boolean)
+     * @param loginID  {@code String}
+     * @param password {@code String}
+     * @return auth {@code boolean}
      * @throws SQLException
+     *                      When {@code loginDAO.checkLogin()}
      */
-    public boolean check(String id, String password) throws SQLException {
+    public boolean check(String loginID, String password) throws SQLException {
         // get Connection.
-<span class="fc" id="L67">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
-<span class="fc" id="L68">        Connection connection = managerUtil.getConnection();</span>
-<span class="fc" id="L69">        LoginDAO loginDAO = new LoginDAO(connection);</span>
+<span class="nc" id="L68">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
+<span class="nc" id="L69">        Connection connection = managerUtil.getConnection();</span>
+<span class="nc" id="L70">        LoginDAO loginDAO = new LoginDAO(connection);</span>
         try {
-<span class="fc" id="L71">            boolean auth = loginDAO.checkLogin(id, password);</span>
-<span class="fc" id="L72">            return auth;</span>
-<span class="nc" id="L73">        } catch (SQLException e) {</span>
-<span class="nc" id="L74">            e.printStackTrace();</span>
-<span class="nc" id="L75">            return false;</span>
+<span class="nc" id="L72">            boolean auth = loginDAO.checkLogin(loginID, password);</span>
+<span class="nc" id="L73">            return auth;</span>
+<span class="nc" id="L74">        } catch (SQLException e) {</span>
+<span class="nc" id="L75">            e.printStackTrace();</span>
+<span class="nc" id="L76">            return false;</span>
         }
     }
 

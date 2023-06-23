@@ -46,8 +46,8 @@ public class MainServlet extends HttpServlet {
     }
 
     /**
-     * @param request
-     * @param response
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
      * @throws ServletException
      * @throws IOException
      */
