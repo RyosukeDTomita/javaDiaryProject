@@ -17,7 +17,7 @@ public class DiaryException extends RuntimeException {
     /**
      * Constructor
      *
-     * @param msg
+     * @param msg message
      */
     public DiaryException(String msg) {
         super(msg);
@@ -35,7 +35,7 @@ public class DiaryException extends RuntimeException {
     /**
      * Constructor
      * 
-     * @param msg
+     * @param msg message
      * @param e   Exception
      */
     public DiaryException(String msg, Exception e) {

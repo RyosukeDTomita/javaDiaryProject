@@ -81,14 +81,15 @@ public class DiaryDAOTest {
     /**
      * getDeletingDiaryNumber() is private method.
      * use reflection api.
+     * 
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
     @Test
     @Fast
     public void getDeletingDiaryNumberTest()
             throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException,
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-            NoSuchMethodException {
+            InvocationTargetException, NoSuchMethodException, SecurityException {
         // setup
         DiaryVO dvoTmp = new DiaryVO("droptest", "2022-12-25", "今日はクリスマスです。");
         DiaryVO dvoTmpDummy = new DiaryVO("droptest", "2022-12-25", "ダミー。");

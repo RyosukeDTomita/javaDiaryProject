@@ -26,8 +26,8 @@ public class UserDiaryListBean implements ExecuteInterface {
      * {@inheritDoc}
      * call from newdiary.jsp
      * 
-     * @param request
-     * @param response
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -47,8 +47,9 @@ public class UserDiaryListBean implements ExecuteInterface {
 
     /**
      * 
-     * @param loginID
-     * @return List<DiaryVO>
+     * @param loginID {@code String}
+     * @return List
+     *         {@code List<DiaryVO>}
      */
     public List<DiaryVO> selectUserDiary(String loginID) {
 

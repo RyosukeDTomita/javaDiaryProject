@@ -22,33 +22,34 @@ import java.util.Collections;
  */
 public class DiaryDAO {
 
-<span class="fc" id="L25">    ConnectionManagerUtil connectionManager = new ConnectionManagerUtil();</span>
+<span class="nc" id="L25">    ConnectionManagerUtil connectionManager = new ConnectionManagerUtil();</span>
     private Connection connection;
 
-<span class="fc" id="L28">    public DiaryDAO(Connection connection) {</span>
-<span class="fc" id="L29">        this.connection = connection;</span>
-<span class="fc" id="L30">    }</span>
+<span class="nc" id="L28">    public DiaryDAO(Connection connection) {</span>
+<span class="nc" id="L29">        this.connection = connection;</span>
+<span class="nc" id="L30">    }</span>
 
     /**
      * Insert DiaryVO into SQL Data Base.
      *
      * @param dvo {@code DiaryVO}
      * @return int
+     *         if return value is plus, success.
      * 
      */
     public int insert(DiaryVO dvo) {
-<span class="fc" id="L40">        String INSERT_SQL = &quot;INSERT INTO diarycontent (dt, id, sentence, checks) VALUES(?, ?, ?, ?)&quot;;</span>
-<span class="fc" id="L41">        try (PreparedStatement statement = connection.prepareStatement(INSERT_SQL)) {</span>
-<span class="fc" id="L42">            System.out.println(&quot;INSERT &quot; + dvo);</span>
-<span class="fc" id="L43">            statement.setString(1, dvo.getDateTime());</span>
-<span class="fc" id="L44">            statement.setString(2, dvo.getLoginID());</span>
-<span class="fc" id="L45">            statement.setString(3, dvo.getSentence());</span>
-<span class="fc" id="L46">            statement.setString(4, &quot;NULL&quot;); // WEP</span>
-<span class="fc" id="L47">            int count = statement.executeUpdate();</span>
-<span class="fc" id="L48">            return count;</span>
-<span class="nc" id="L49">        } catch (SQLException e) {</span>
-<span class="nc" id="L50">            e.printStackTrace();</span>
-<span class="nc" id="L51">            return -99; // error</span>
+<span class="nc" id="L41">        String INSERT_SQL = &quot;INSERT INTO diarycontent (dt, id, sentence, checks) VALUES(?, ?, ?, ?)&quot;;</span>
+<span class="nc" id="L42">        try (PreparedStatement statement = connection.prepareStatement(INSERT_SQL)) {</span>
+<span class="nc" id="L43">            System.out.println(&quot;INSERT &quot; + dvo);</span>
+<span class="nc" id="L44">            statement.setString(1, dvo.getDateTime());</span>
+<span class="nc" id="L45">            statement.setString(2, dvo.getLoginID());</span>
+<span class="nc" id="L46">            statement.setString(3, dvo.getSentence());</span>
+<span class="nc" id="L47">            statement.setString(4, &quot;NULL&quot;); // WEP</span>
+<span class="nc" id="L48">            int count = statement.executeUpdate();</span>
+<span class="nc" id="L49">            return count;</span>
+<span class="nc" id="L50">        } catch (SQLException e) {</span>
+<span class="nc" id="L51">            e.printStackTrace();</span>
+<span class="nc" id="L52">            return -99; // error</span>
         }
 
     }
@@ -58,79 +59,82 @@ public class DiaryDAO {
      * This list is consist of {@link DiaryVO DiaryVO}.
      * 
      * @return List
+     *         {@code List&lt;DiaryVO&gt;}
      */
     public List&lt;DiaryVO&gt; selectUserDiary(String userID) {
-<span class="fc" id="L63">        String SELECT_SQL = &quot;SELECT dt, id, sentence, checks FROM diarycontent WHERE id=?&quot;;</span>
+<span class="nc" id="L65">        String SELECT_SQL = &quot;SELECT dt, id, sentence, checks FROM diarycontent WHERE id=?&quot;;</span>
 
-<span class="fc" id="L65">        List&lt;DiaryVO&gt; diaryList = new ArrayList&lt;&gt;(); // = ArrayList&lt;DiaryVO&gt;() (Diamond Operator).</span>
-<span class="fc" id="L66">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
-<span class="fc" id="L67">            statement.setString(1, userID);</span>
-<span class="fc" id="L68">            try (ResultSet resultSet = statement.executeQuery()) {</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">                while (resultSet.next()) {</span>
-<span class="fc" id="L70">                    DiaryVO diaryVO = new DiaryVO();</span>
-<span class="fc" id="L71">                    diaryVO.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
-<span class="fc" id="L72">                    diaryVO.setLoginID(resultSet.getString(&quot;id&quot;));</span>
-<span class="fc" id="L73">                    diaryVO.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
-<span class="fc" id="L74">                    diaryList.add(diaryVO);</span>
-<span class="fc" id="L75">                }</span>
+<span class="nc" id="L67">        List&lt;DiaryVO&gt; diaryList = new ArrayList&lt;&gt;(); // = ArrayList&lt;DiaryVO&gt;() (Diamond Operator).</span>
+<span class="nc" id="L68">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
+<span class="nc" id="L69">            statement.setString(1, userID);</span>
+<span class="nc" id="L70">            try (ResultSet resultSet = statement.executeQuery()) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                while (resultSet.next()) {</span>
+<span class="nc" id="L72">                    DiaryVO diaryVO = new DiaryVO();</span>
+<span class="nc" id="L73">                    diaryVO.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
+<span class="nc" id="L74">                    diaryVO.setLoginID(resultSet.getString(&quot;id&quot;));</span>
+<span class="nc" id="L75">                    diaryVO.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
+<span class="nc" id="L76">                    diaryList.add(diaryVO);</span>
+<span class="nc" id="L77">                }</span>
                 // System.out.println(diaryList);
             }
-<span class="nc" id="L78">        } catch (SQLException e) {</span>
-<span class="nc" id="L79">            e.printStackTrace();</span>
-<span class="nc" id="L80">            System.out.println(&quot;SQLException.&quot;);</span>
-<span class="fc" id="L81">        }</span>
-<span class="fc" id="L82">        Collections.reverse(diaryList);</span>
-<span class="fc" id="L83">        return diaryList;</span>
+<span class="nc" id="L80">        } catch (SQLException e) {</span>
+<span class="nc" id="L81">            e.printStackTrace();</span>
+<span class="nc" id="L82">            System.out.println(&quot;SQLException.&quot;);</span>
+<span class="nc" id="L83">        }</span>
+<span class="nc" id="L84">        Collections.reverse(diaryList);</span>
+<span class="nc" id="L85">        return diaryList;</span>
     }
 
     /**
      * Used in {@code drop()}.
-     * From DB, get diarycontent NUMBER.
+     * From DB, get diary content NUMBER.
      * 
-     * @param dvo
+     * @param dvo {@code DiaryVO}
      * @return int
+     *         return number identified diary content.
      */
     private int getDeletingDiaryNumber(DiaryVO dvo) {
-<span class="fc" id="L94">        String SELECT_SQL = &quot;SELECT * FROM diarycontent WHERE id=? AND dt=?&quot;;</span>
+<span class="nc" id="L97">        String SELECT_SQL = &quot;SELECT * FROM diarycontent WHERE id=? AND dt=?&quot;;</span>
 
-<span class="fc" id="L96">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
-<span class="fc" id="L97">            statement.setString(1, dvo.getLoginID());</span>
-<span class="fc" id="L98">            statement.setString(2, dvo.getDateTime());</span>
-<span class="fc" id="L99">            try (ResultSet resultSet = statement.executeQuery()) {</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">                while (resultSet.next()) {</span>
-<span class="fc" id="L101">                    DiaryVO delCandidateDvo = new DiaryVO();</span>
-<span class="fc" id="L102">                    delCandidateDvo.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
-<span class="fc" id="L103">                    delCandidateDvo.setLoginID(resultSet.getString(&quot;id&quot;));</span>
-<span class="fc" id="L104">                    delCandidateDvo.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">                    if (delCandidateDvo.equals(dvo)) {</span>
-<span class="fc" id="L106">                        return resultSet.getInt(&quot;NUMBER&quot;);</span>
+<span class="nc" id="L99">        try (PreparedStatement statement = connection.prepareStatement(SELECT_SQL)) {</span>
+<span class="nc" id="L100">            statement.setString(1, dvo.getLoginID());</span>
+<span class="nc" id="L101">            statement.setString(2, dvo.getDateTime());</span>
+<span class="nc" id="L102">            try (ResultSet resultSet = statement.executeQuery()) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                while (resultSet.next()) {</span>
+<span class="nc" id="L104">                    DiaryVO delCandidateDvo = new DiaryVO();</span>
+<span class="nc" id="L105">                    delCandidateDvo.setDateTime(resultSet.getString(&quot;dt&quot;).replace(&quot; 00:00:00&quot;, &quot;&quot;));</span>
+<span class="nc" id="L106">                    delCandidateDvo.setLoginID(resultSet.getString(&quot;id&quot;));</span>
+<span class="nc" id="L107">                    delCandidateDvo.setSentence(resultSet.getString(&quot;sentence&quot;));</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    if (delCandidateDvo.equals(dvo)) {</span>
+<span class="nc" id="L109">                        return resultSet.getInt(&quot;NUMBER&quot;);</span>
                     }
-<span class="fc" id="L108">                }</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            }</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        } catch (SQLException e) {</span>
-<span class="nc" id="L111">            e.printStackTrace();</span>
-<span class="nc" id="L112">            System.out.println(&quot;SQLException.&quot;);</span>
-<span class="fc" id="L113">        }</span>
-<span class="fc" id="L114">        return -99; // No deleting target.</span>
+<span class="nc" id="L111">                }</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            }</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L114">            e.printStackTrace();</span>
+<span class="nc" id="L115">            System.out.println(&quot;SQLException.&quot;);</span>
+<span class="nc" id="L116">        }</span>
+<span class="nc" id="L117">        return -99; // No deleting target.</span>
     }
 
     /**
      * Delete diary data.
      * 
-     * @param dvo
-     * @return
+     * @param dvo {@code DiaryVO}
+     * @return int
+     *         if return value is plus, success.
      */
     public int drop(DiaryVO dvo) {
-<span class="fc" id="L124">        String DELETE_SQL = &quot;DELETE FROM diarycontent WHERE NUMBER=?&quot;;</span>
-<span class="fc" id="L125">        Integer dropDiaryNumber = getDeletingDiaryNumber(dvo);</span>
-<span class="fc" id="L126">        try (PreparedStatement statement = connection.prepareStatement(DELETE_SQL)) {</span>
-<span class="fc" id="L127">            System.out.println(&quot;DELETE &quot; + dvo);</span>
-<span class="fc" id="L128">            statement.setString(1, dropDiaryNumber.toString());</span>
-<span class="fc" id="L129">            int count = statement.executeUpdate();</span>
-<span class="fc" id="L130">            return count;</span>
-<span class="nc" id="L131">        } catch (SQLException e) {</span>
-<span class="nc" id="L132">            e.printStackTrace();</span>
-<span class="nc" id="L133">            return -99; // error</span>
+<span class="nc" id="L128">        String DELETE_SQL = &quot;DELETE FROM diarycontent WHERE NUMBER=?&quot;;</span>
+<span class="nc" id="L129">        Integer dropDiaryNumber = getDeletingDiaryNumber(dvo);</span>
+<span class="nc" id="L130">        try (PreparedStatement statement = connection.prepareStatement(DELETE_SQL)) {</span>
+<span class="nc" id="L131">            System.out.println(&quot;DELETE &quot; + dvo);</span>
+<span class="nc" id="L132">            statement.setString(1, dropDiaryNumber.toString());</span>
+<span class="nc" id="L133">            int count = statement.executeUpdate();</span>
+<span class="nc" id="L134">            return count;</span>
+<span class="nc" id="L135">        } catch (SQLException e) {</span>
+<span class="nc" id="L136">            e.printStackTrace();</span>
+<span class="nc" id="L137">            return -99; // error</span>
         }
     }
 }

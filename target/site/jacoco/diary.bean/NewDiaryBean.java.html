@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * @author iceman
  * @version 1.0
  */
-<span class="fc" id="L21">public class NewDiaryBean implements ExecuteInterface {</span>
+<span class="nc" id="L21">public class NewDiaryBean implements ExecuteInterface {</span>
 
     /**
      * {@inheritDoc}
@@ -31,29 +31,29 @@ import javax.servlet.http.HttpSession;
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         // get Connection.
-<span class="fc" id="L34">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
-<span class="fc" id="L35">        Connection connection = managerUtil.getConnection();</span>
-<span class="fc" id="L36">        HttpSession session = request.getSession(false);</span>
+<span class="nc" id="L34">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
+<span class="nc" id="L35">        Connection connection = managerUtil.getConnection();</span>
+<span class="nc" id="L36">        HttpSession session = request.getSession(false);</span>
 
         // set diary data from web session.
-<span class="fc" id="L39">        String loginID = (String) session.getAttribute(&quot;loginID&quot;);</span>
-<span class="fc" id="L40">        String dateTime = request.getParameter(&quot;dateTime&quot;);</span>
-<span class="fc" id="L41">        String sentence = request.getParameter(&quot;sentence&quot;);</span>
+<span class="nc" id="L39">        String loginID = (String) session.getAttribute(&quot;loginID&quot;);</span>
+<span class="nc" id="L40">        String dateTime = request.getParameter(&quot;dateTime&quot;);</span>
+<span class="nc" id="L41">        String sentence = request.getParameter(&quot;sentence&quot;);</span>
 
         // Use dao to insert into DB.
-<span class="fc" id="L44">        DiaryDAO diaryDAO = new DiaryDAO(connection);</span>
-<span class="fc" id="L45">        DiaryVO diaryVO = new DiaryVO(loginID, dateTime, sentence);</span>
-<span class="fc" id="L46">        int statusCode = diaryDAO.insert(diaryVO);</span>
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (statusCode == -99) {</span>
+<span class="nc" id="L44">        DiaryDAO diaryDAO = new DiaryDAO(connection);</span>
+<span class="nc" id="L45">        DiaryVO diaryVO = new DiaryVO(loginID, dateTime, sentence);</span>
+<span class="nc" id="L46">        int statusCode = diaryDAO.insert(diaryVO);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (statusCode == -99) {</span>
 <span class="nc" id="L48">            ResourceBundle rb = ResourceBundle.getBundle(&quot;message&quot;);</span>
 <span class="nc" id="L49">            request.setAttribute(&quot;errorMessage&quot;, rb.getString(&quot;newDiary.error.message&quot;));</span>
 <span class="nc" id="L50">            managerUtil.closeConnection();</span>
 <span class="nc" id="L51">            return &quot;failure&quot;;</span>
         }
 
-<span class="fc" id="L54">        managerUtil.commit();</span>
-<span class="fc" id="L55">        managerUtil.closeConnection();</span>
-<span class="fc" id="L56">        return &quot;success&quot;;</span>
+<span class="nc" id="L54">        managerUtil.commit();</span>
+<span class="nc" id="L55">        managerUtil.closeConnection();</span>
+<span class="nc" id="L56">        return &quot;success&quot;;</span>
 
     }
 }

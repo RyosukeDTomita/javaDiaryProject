@@ -20,47 +20,48 @@ import diary.vo.DiaryVO;
  * @author iceman
  * @version 1.0
  */
-<span class="fc" id="L23">public class UserDiaryListBean implements ExecuteInterface {</span>
+<span class="nc" id="L23">public class UserDiaryListBean implements ExecuteInterface {</span>
 
     /**
      * {@inheritDoc}
      * call from newdiary.jsp
      * 
-     * @param request
-     * @param response
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-<span class="fc" id="L34">        HttpSession session = request.getSession(false);</span>
-<span class="fc" id="L35">        String loginID = (String) session.getAttribute(&quot;loginID&quot;);</span>
-<span class="fc" id="L36">        System.out.println(&quot;=====&quot;);</span>
-<span class="fc" id="L37">        System.out.println(loginID);</span>
-<span class="fc" id="L38">        List&lt;DiaryVO&gt; diaryVOList = selectUserDiary(loginID);</span>
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (diaryVOList.size() == 0) {</span>
+<span class="nc" id="L34">        HttpSession session = request.getSession(false);</span>
+<span class="nc" id="L35">        String loginID = (String) session.getAttribute(&quot;loginID&quot;);</span>
+<span class="nc" id="L36">        System.out.println(&quot;=====&quot;);</span>
+<span class="nc" id="L37">        System.out.println(loginID);</span>
+<span class="nc" id="L38">        List&lt;DiaryVO&gt; diaryVOList = selectUserDiary(loginID);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (diaryVOList.size() == 0) {</span>
 <span class="nc" id="L40">            ResourceBundle rb = ResourceBundle.getBundle(&quot;message&quot;);</span>
 <span class="nc" id="L41">            session.setAttribute(&quot;errorMessage&quot;, rb.getString(&quot;userDiary.error.message&quot;));</span>
 <span class="nc" id="L42">            return &quot;failure&quot;;</span>
         }
-<span class="fc" id="L44">        session.setAttribute(&quot;diaryVOList&quot;, diaryVOList);</span>
-<span class="fc" id="L45">        return &quot;success&quot;;</span>
+<span class="nc" id="L44">        session.setAttribute(&quot;diaryVOList&quot;, diaryVOList);</span>
+<span class="nc" id="L45">        return &quot;success&quot;;</span>
     }
 
     /**
      * 
-     * @param loginID
-     * @return List&lt;DiaryVO&gt;
+     * @param loginID {@code String}
+     * @return List
+     *         {@code List&lt;DiaryVO&gt;}
      */
     public List&lt;DiaryVO&gt; selectUserDiary(String loginID) {
 
         // get Connection.
-<span class="fc" id="L56">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
-<span class="fc" id="L57">        Connection connection = managerUtil.getConnection();</span>
+<span class="nc" id="L57">        ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();</span>
+<span class="nc" id="L58">        Connection connection = managerUtil.getConnection();</span>
 
-<span class="fc" id="L59">        DiaryDAO diaryDAO = new DiaryDAO(connection);</span>
-<span class="fc" id="L60">        List&lt;DiaryVO&gt; diaryVOList = diaryDAO.selectUserDiary(loginID);</span>
+<span class="nc" id="L60">        DiaryDAO diaryDAO = new DiaryDAO(connection);</span>
+<span class="nc" id="L61">        List&lt;DiaryVO&gt; diaryVOList = diaryDAO.selectUserDiary(loginID);</span>
 
-<span class="fc" id="L62">        managerUtil.closeConnection();</span>
-<span class="fc" id="L63">        return diaryVOList;</span>
+<span class="nc" id="L63">        managerUtil.closeConnection();</span>
+<span class="nc" id="L64">        return diaryVOList;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

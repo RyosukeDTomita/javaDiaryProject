@@ -23,8 +23,8 @@ public class LoginSubmitBean implements ExecuteInterface {
      * {@inheritDoc}
      * call from {@link diary.servlet.MainServlet MainServlet}
      * 
-     * @param request
-     * @param response
+     * @param request  {@code HttpServletRequest}
+     * @param response {@code HttpServletResponse}
      * @return String "success" or "failure".
      */
     @Override
@@ -57,18 +57,19 @@ public class LoginSubmitBean implements ExecuteInterface {
     /**
      * call {@link diary.dataaccess.LoginDAO LoginDAO}.
      * 
-     * @param id
-     * @param password
-     * @return auth (boolean)
+     * @param loginID  {@code String}
+     * @param password {@code String}
+     * @return auth {@code boolean}
      * @throws SQLException
+     *                      When {@code loginDAO.checkLogin()}
      */
-    public boolean check(String id, String password) throws SQLException {
+    public boolean check(String loginID, String password) throws SQLException {
         // get Connection.
         ConnectionManagerUtil managerUtil = new ConnectionManagerUtil();
         Connection connection = managerUtil.getConnection();
         LoginDAO loginDAO = new LoginDAO(connection);
         try {
-            boolean auth = loginDAO.checkLogin(id, password);
+            boolean auth = loginDAO.checkLogin(loginID, password);
             return auth;
         } catch (SQLException e) {
             e.printStackTrace();
