@@ -87,6 +87,7 @@ public class DiaryDAOTest {
     public void getDeletingDiaryNumberTest()
             throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException,
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
             NoSuchMethodException {
         // setup
         DiaryVO dvoTmp = new DiaryVO("droptest", "2022-12-25", "今日はクリスマスです。");
