@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          #distribution: 'Java(TM) SE Runtime Environment'
+          distribution: 'adopt'
           architecture: x64
 
       # run JUnit5 test
